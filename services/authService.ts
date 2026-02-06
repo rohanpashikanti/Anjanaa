@@ -10,8 +10,7 @@ export const AuthService = {
     // Login with username and pin
     login: async (username: string, pin: string): Promise<UserProfile | null> => {
         if (!db) {
-            console.error("Database not initialized. Check Firebase configuration.");
-            return null;
+            throw new Error("Database not initialized. Please ensure Firebase environment variables are set in Vercel.");
         }
         try {
             const q = query(
