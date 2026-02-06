@@ -31,9 +31,9 @@ export const GuardianSetup: React.FC = () => {
     try {
       await AuthService.register(name, pin, 'guardian');
       navigate('/setup/child');
-    } catch (error) {
+    } catch (error: any) {
       console.error("Registration failed:", error);
-      alert("Registration failed. Name might be taken.");
+      alert(error?.message || "Registration failed. Name might be taken.");
       setStep('name');
       setPin('');
     } finally {
