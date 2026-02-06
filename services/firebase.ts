@@ -1,5 +1,5 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
+import { initializeApp, getApps } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
 
@@ -14,9 +14,20 @@ const firebaseConfig = {
     measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-export const db = getFirestore(app);
+// Check if we have the minimum required config
+const isConfigAvailable = !!firebaseConfig.apiKey && !!firebaseConfig.projectId;
+
+if (!isConfigAvailable && import.meta.env.PROD) {
+    console.error("Firebase configuration is missing! Please set your environment variables in Vercel.");
+}
+
+// Initialize Firebase only if config is present and not already initialized
+const app = isConfigAvailable
+    ? (getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0])
+    : null;
+
+const analytics = app ? getAnalytics(app) : null;
+export const db = app ? getFirestore(app) : null;
 
 export default app;
+

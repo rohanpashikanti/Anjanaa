@@ -9,6 +9,10 @@ const SESSION_KEY = 'nexo_user_id';
 export const AuthService = {
     // Login with username and pin
     login: async (username: string, pin: string): Promise<UserProfile | null> => {
+        if (!db) {
+            console.error("Database not initialized. Check Firebase configuration.");
+            return null;
+        }
         try {
             const q = query(
                 collection(db, USERS_COLLECTION),
@@ -49,7 +53,7 @@ export const AuthService = {
     // Retrieve full user profile from session ID
     getCurrentUser: async (): Promise<UserProfile | null> => {
         const userId = localStorage.getItem(SESSION_KEY);
-        if (!userId) return null;
+        if (!userId || !db) return null;
 
         try {
             const docRef = doc(db, USERS_COLLECTION, userId);
@@ -74,6 +78,9 @@ export const AuthService = {
         role: 'guardian' | 'child' = 'child',
         profileData: Partial<UserProfile> = {}
     ): Promise<UserProfile> => {
+        if (!db) {
+            throw new Error("Database not initialized. Check Firebase configuration.");
+        }
         // Check if username exists
         const q = query(collection(db, USERS_COLLECTION), where('username', '==', username));
         const exists = await getDocs(q);

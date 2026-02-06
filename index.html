@@ -1,88 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="https://fonts.gstatic.com/s/i/materialiconsround/auto_awesome/v15/24px.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Anjanaa</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Nunito:wght@400;600;700;800;900&display=swap"
-      rel="stylesheet"
-    />
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              brand: {
-                purple: "#8b5cf6",
-                dark: "#4c1d95",
-                light: "#ddd6fe",
-                pink: "#ec4899",
-              },
-              accent: {
-                yellow: "#fbbf24",
-                green: "#34d399",
-                orange: "#fb923c",
-              }
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml"
+    href="https://fonts.gstatic.com/s/i/materialiconsround/auto_awesome/v15/24px.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Anjanaa</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Nunito:wght@400;600;700;800;900&display=swap"
+    rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              purple: "#8b5cf6",
+              dark: "#4c1d95",
+              light: "#ddd6fe",
+              pink: "#ec4899",
             },
-            fontFamily: {
-              display: ['Fredoka', 'sans-serif'],
-              body: ['Nunito', 'sans-serif'],
-            },
-            boxShadow: {
-              'clay-card': '8px 8px 16px #d1d9e6, -8px -8px 16px #ffffff',
-              'soft': '0 10px 40px -10px rgba(0,0,0,0.08)',
-              'glow': '0 0 20px rgba(139, 92, 246, 0.3)',
-            },
-            backgroundImage: {
-              'main-gradient': 'linear-gradient(to bottom right, #f3e8ff, #fdf4ff, #e0e7ff)',
-              'hero-gradient': 'linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%)',
-              'pink-gradient': 'linear-gradient(135deg, #f472b6 0%, #fb7185 100%)',
+            accent: {
+              yellow: "#fbbf24",
+              green: "#34d399",
+              orange: "#fb923c",
             }
           },
+          fontFamily: {
+            display: ['Fredoka', 'sans-serif'],
+            body: ['Nunito', 'sans-serif'],
+          },
+          boxShadow: {
+            'clay-card': '8px 8px 16px #d1d9e6, -8px -8px 16px #ffffff',
+            'soft': '0 10px 40px -10px rgba(0,0,0,0.08)',
+            'glow': '0 0 20px rgba(139, 92, 246, 0.3)',
+          },
+          backgroundImage: {
+            'main-gradient': 'linear-gradient(to bottom right, #f3e8ff, #fdf4ff, #e0e7ff)',
+            'hero-gradient': 'linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%)',
+            'pink-gradient': 'linear-gradient(135deg, #f472b6 0%, #fb7185 100%)',
+          }
         },
-      };
-    </script>
-    <style>
-      body {
-        background: linear-gradient(to bottom right, #f3e8ff, #fdf4ff, #e0e7ff);
-        background-attachment: fixed;
-        overscroll-behavior: none;
-        font-family: 'Nunito', sans-serif;
-      }
-      .font-display { font-family: 'Fredoka', sans-serif; }
-      
-      /* Hide scrollbar */
-      .no-scrollbar::-webkit-scrollbar {
-        display: none;
-      }
-      .no-scrollbar {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-      }
-    </style>
-  <script type="importmap">
-{
-  "imports": {
-    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
-    "react/": "https://esm.sh/react@^19.2.4/",
-    "react": "https://esm.sh/react@^19.2.4",
-    "react-router-dom": "https://esm.sh/react-router-dom@^7.13.0",
-    "framer-motion": "https://esm.sh/framer-motion@^12.29.3",
-    "clsx": "https://esm.sh/clsx@^2.1.1",
-    "tailwind-merge": "https://esm.sh/tailwind-merge@^3.4.0"
-  }
-}
-</script>
-<link rel="stylesheet" href="/index.css">
+      },
+    };
+  </script>
+  <style>
+    body {
+      background: linear-gradient(to bottom right, #f3e8ff, #fdf4ff, #e0e7ff);
+      background-attachment: fixed;
+      overscroll-behavior: none;
+      font-family: 'Nunito', sans-serif;
+    }
+
+    .font-display {
+      font-family: 'Fredoka', sans-serif;
+    }
+
+    /* Hide scrollbar */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
 </head>
-  <body>
-    <div id="root"></div>
+
+<body>
+  <div id="root"></div>
   <script type="module" src="/index.tsx"></script>
 </body>
+
 </html>
