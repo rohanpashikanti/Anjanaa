@@ -23,9 +23,14 @@ export const GuardianDashboard: React.FC = () => {
     // Reward Form State
     const [rewardTitle, setRewardTitle] = useState('');
     const [rewardCost, setRewardCost] = useState(100);
+    const [rewardEmoji, setRewardEmoji] = useState('🎁');
 
     // Bonus Form State
     const [bonusAmount, setBonusAmount] = useState(0);
+    const [bonusReason, setBonusReason] = useState('');
+
+    const REWARD_EMOJIS = ['🎁', '🍦', '🎮', '📺', '🎟️', '🍕', '🎨', '⚽', '🧸', '📱', '💻', '🎧'];
+
 
     const handleApprove = async (task: Task) => {
         await approveTask(task.id);
@@ -61,21 +66,24 @@ export const GuardianDashboard: React.FC = () => {
             id: Date.now().toString(),
             title: rewardTitle,
             cost: rewardCost,
-            image: 'https://cdn-icons-png.flaticon.com/512/744/744922.png', // Generic gift
+            image: rewardEmoji, // Use selected emoji
             type: 'voucher',
             purchased: false
         };
         await addReward(newReward);
         setRewardTitle('');
+        setRewardEmoji('🎁');
         setActiveModal(null);
     };
 
     const handleAdjustGems = async () => {
         if (bonusAmount === 0) return;
-        await adjustGems(bonusAmount);
+        await adjustGems(bonusAmount, bonusReason); // Pass reason
         setBonusAmount(0);
+        setBonusReason('');
         setActiveModal(null);
     }
+
 
     const handleDeleteReward = async (id: string) => {
         await deleteReward(id);
@@ -227,18 +235,19 @@ export const GuardianDashboard: React.FC = () => {
                                     </div>
                                     <div className="flex gap-2">
                                         <button
-                                            onClick={() => handleReject(task)}
-                                            className="flex-1 bg-white border-2 border-red-500 text-red-500 py-2 rounded-xl font-bold text-sm shadow-sm active:scale-95"
-                                        >
-                                            Reject
-                                        </button>
-                                        <button
                                             onClick={() => handleApprove(task)}
                                             className="flex-[2] bg-green-500 text-white py-2 rounded-xl font-bold text-sm shadow-md active:scale-95"
                                         >
                                             Verify & Approve
                                         </button>
+                                        <button
+                                            onClick={() => handleReject(task)}
+                                            className="flex-1 bg-white border-2 border-red-500 text-red-500 py-2 rounded-xl font-bold text-sm shadow-sm active:scale-95"
+                                        >
+                                            Reject
+                                        </button>
                                     </div>
+
 
                                 </div>
                             ))
@@ -410,6 +419,22 @@ export const GuardianDashboard: React.FC = () => {
                                         />
                                     </div>
 
+                                    <div className="mb-6">
+                                        <label className="text-xs font-bold text-gray-400 mb-2 block">Choose Icon</label>
+                                        <div className="grid grid-cols-6 gap-2">
+                                            {REWARD_EMOJIS.map(emoji => (
+                                                <button
+                                                    key={emoji}
+                                                    onClick={() => setRewardEmoji(emoji)}
+                                                    className={`w-10 h-10 flex items-center justify-center text-xl rounded-lg border-2 transition-all ${rewardEmoji === emoji ? 'border-brand-purple bg-purple-50 scale-110' : 'border-transparent hover:bg-gray-50'}`}
+                                                >
+                                                    {emoji}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+
+
                                     <button onClick={handleCreateReward} className="w-full bg-green-500 text-white py-3 rounded-xl font-bold shadow-lg">Add to Store</button>
                                 </>
                             )}
@@ -419,13 +444,25 @@ export const GuardianDashboard: React.FC = () => {
                                     <h2 className="text-xl font-display font-bold text-gray-900 mb-2">Adjust Gems</h2>
                                     <p className="text-xs text-gray-500 mb-6">Gift extra gems or deduct for behavior.</p>
 
-                                    <div className="flex justify-center items-center gap-6 mb-8">
+                                    <div className="flex justify-center items-center gap-6 mb-6">
                                         <button onClick={() => setBonusAmount(prev => prev - 10)} className="w-12 h-12 bg-red-100 text-red-500 rounded-full flex items-center justify-center font-bold text-xl">-</button>
                                         <span className={`text-3xl font-bold font-display ${bonusAmount >= 0 ? 'text-green-500' : 'text-red-500'}`}>
                                             {bonusAmount > 0 ? '+' : ''}{bonusAmount}
                                         </span>
                                         <button onClick={() => setBonusAmount(prev => prev + 10)} className="w-12 h-12 bg-green-100 text-green-500 rounded-full flex items-center justify-center font-bold text-xl">+</button>
                                     </div>
+
+                                    <div className="mb-6">
+                                        <label className="text-xs font-bold text-gray-400 mb-2 block">Reason (Optional)</label>
+                                        <input
+                                            type="text"
+                                            placeholder="e.g. Extra Chores, Good Behavior"
+                                            value={bonusReason}
+                                            onChange={e => setBonusReason(e.target.value)}
+                                            className="w-full bg-gray-50 border border-gray-100 rounded-xl p-3 font-bold outline-none focus:ring-2 ring-gray-200"
+                                        />
+                                    </div>
+
 
                                     <button onClick={handleAdjustGems} className="w-full bg-gray-900 text-white py-3 rounded-xl font-bold shadow-lg">Apply Adjustment</button>
                                 </>

@@ -346,7 +346,8 @@ export const rejectTask = async (taskId: string) => {
 };
 
 
-export const adjustGems = async (amount: number) => {
+
+export const adjustGems = async (amount: number, reason?: string) => {
   const userId = getCurrentUserId();
   const userRef = doc(db, 'users', userId);
   const userSnap = await getDoc(userRef);
@@ -369,15 +370,17 @@ export const adjustGems = async (amount: number) => {
   });
 
   // Record Transaction
+  const defaultTitle = amount > 0 ? 'Gem Bonus' : 'Gem Adjustment';
   await recordTransaction({
     type: 'bonus',
     amount: amount,
-    title: amount > 0 ? 'Gem Bonus' : 'Gem Adjustment',
+    title: reason || defaultTitle,
     icon: '💎'
   });
 
   await checkBadges(userId);
 };
+
 
 // Check Daily Logic (called on load generally)
 export const checkDailyLogic = async () => {
