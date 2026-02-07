@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAppState, approveTask, addTask, addReward, adjustGems, deleteReward, deleteTask, updateProfile } from '../../services/storageService';
+import { useAppState, approveTask, rejectTask, addTask, addReward, adjustGems, deleteReward, deleteTask, updateProfile } from '../../services/storageService';
 import { AppState, Task, Reward, TaskCategory } from '../../types';
 import { BottomDock } from '../../components/BottomDock';
 import { Settings, Moon, Trophy, Hourglass, Check, X, Image as ImageIcon, Plus, Gift, Trash2, Zap, LayoutGrid, LogOut, Calendar, RefreshCw, Star } from 'lucide-react';
@@ -30,6 +30,11 @@ export const GuardianDashboard: React.FC = () => {
     const handleApprove = async (task: Task) => {
         await approveTask(task.id);
     };
+
+    const handleReject = async (task: Task) => {
+        await rejectTask(task.id);
+    };
+
 
     const handleCreateQuest = async () => {
         if (!questTitle) return;
@@ -220,12 +225,21 @@ export const GuardianDashboard: React.FC = () => {
                                             <span className="text-[10px] font-bold bg-amber-100 text-amber-600 px-2 py-0.5 rounded-full">+{task.reward} Gems</span>
                                         </div>
                                     </div>
-                                    <button
-                                        onClick={() => handleApprove(task)}
-                                        className="w-full bg-green-500 text-white py-2 rounded-xl font-bold text-sm shadow-md active:scale-95"
-                                    >
-                                        Verify & Approve
-                                    </button>
+                                    <div className="flex gap-2">
+                                        <button
+                                            onClick={() => handleReject(task)}
+                                            className="flex-1 bg-white border-2 border-red-500 text-red-500 py-2 rounded-xl font-bold text-sm shadow-sm active:scale-95"
+                                        >
+                                            Reject
+                                        </button>
+                                        <button
+                                            onClick={() => handleApprove(task)}
+                                            className="flex-[2] bg-green-500 text-white py-2 rounded-xl font-bold text-sm shadow-md active:scale-95"
+                                        >
+                                            Verify & Approve
+                                        </button>
+                                    </div>
+
                                 </div>
                             ))
                         )}

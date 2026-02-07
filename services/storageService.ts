@@ -340,6 +340,12 @@ export const approveTask = async (taskId: string) => {
   await checkBadges(userId);
 };
 
+export const rejectTask = async (taskId: string) => {
+  const taskRef = doc(db, 'tasks', taskId);
+  await updateDoc(taskRef, { status: 'pending' });
+};
+
+
 export const adjustGems = async (amount: number) => {
   const userId = getCurrentUserId();
   const userRef = doc(db, 'users', userId);
